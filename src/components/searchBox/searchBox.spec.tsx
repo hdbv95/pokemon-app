@@ -7,12 +7,15 @@ describe('SearchBox Component', () => {
     const mockHandleSubmit = jest.fn()
 
     const props = {
-        searchBoxData: {
-            search: '',
-            handleChange: mockHandleChange,
-            handleSubmit: mockHandleSubmit
-        }
+        search: '',
+        handleChange: mockHandleChange,
+        handleSubmit: mockHandleSubmit
     }
+
+    afterEach(() => {
+        mockHandleChange.mockClear()
+        mockHandleSubmit.mockClear()
+    })
 
     test('renders input with placeholder', () => {
         render(<SearchBox {...props} />)

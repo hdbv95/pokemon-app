@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { act, render, screen } from "@testing-library/react"
-import Home from "./Home"
+import Home from "."
 import { apiResponse } from "../../utils/fixtures"
 import { getData } from "../../utils/api"
 
@@ -8,6 +8,11 @@ jest.mock('../../utils/api')
 const mockedGetData = getData as jest.MockedFunction<typeof getData>
 
 describe("Home", () => {
+
+    afterEach(() => {
+        mockedGetData.mockClear()
+    })
+
     test("renders loading", async () => {
         mockedGetData.mockResolvedValueOnce(new Promise(() => { }))
         render(<Home />)

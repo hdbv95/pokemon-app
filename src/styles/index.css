@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'PokemonGB';
+    src: url('./PokemonGb-RAeo.ttf') format('truetype');
+    /* Path to your font file */
+    font-weight: normal;
+    font-style: normal;
+}
+
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    font-family: 'PokemonGB', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100vw;
+    min-height: 100vh;
+    /* Apply the font to the body */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 1024px) {
+    body {
+        min-width: auto;
+        min-height: auto;
+        padding: 1rem;
+        overflow: auto;
+    }
+}

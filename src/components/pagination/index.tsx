@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react"
+import Button from "../button"
 
 interface PaginationProps {
-    paginationData: {
-        currentPage: number
-        pages: number
-        handlePrevPage: () => void
-        handleNextPage: () => void
-        handleClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-        shownButtons?: number
-    }
+    currentPage: number
+    pages: number
+    handlePrevPage: () => void
+    handleNextPage: () => void
+    handleClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+    shownButtons?: number
 }
 
-const Pagination: React.FC<PaginationProps> = (props) => {
-    const { pages, currentPage, handlePrevPage, handleNextPage, handleClick, shownButtons = 3 } = props.paginationData
+const Pagination: React.FC<PaginationProps> = ({ pages, currentPage, handlePrevPage, handleNextPage, handleClick, shownButtons = 3 }) => {
     const [dynamicButtons, setDynamicButtons] = useState<number[]>([])
 
     useEffect(() => {
@@ -39,23 +37,20 @@ const Pagination: React.FC<PaginationProps> = (props) => {
     }, [currentPage, shownButtons, pages]);
 
     return (
-        <>
-            <button
-                onClick={handlePrevPage}
-                disabled={currentPage === 0}
-            >
-                Previous
-            </button>
+        <div className="space-x-1">
+            <Button
+                handleClick={handlePrevPage}
+                isDisabled={currentPage === 0}
+                value={"Previous"}
+            />
 
             {/* Render first page button, but only if it's not in dynamicButtons */}
             {pages > 0 && !dynamicButtons.includes(0) && (
-                <button
-                    key={0}
-                    onClick={handleClick}
-                    disabled={currentPage === 0}
-                >
-                    1
-                </button>
+                <Button key={0}
+                    handleClick={handleClick}
+                    isDisabled={currentPage === 0}
+                    value={1}
+                />
             )}
 
             {/* Render ellipsis if needed */}
@@ -63,13 +58,11 @@ const Pagination: React.FC<PaginationProps> = (props) => {
 
             {/* Render dynamic buttons */}
             {dynamicButtons.map((elem) => (
-                <button
-                    key={elem}
-                    onClick={handleClick}
-                    disabled={currentPage === elem}
-                >
-                    {elem + 1}
-                </button>
+                <Button key={elem}
+                    handleClick={handleClick}
+                    isDisabled={currentPage === elem}
+                    value={elem + 1}
+                />
             ))}
 
             {/* Render ellipsis if needed */}
@@ -77,22 +70,19 @@ const Pagination: React.FC<PaginationProps> = (props) => {
 
             {/* Render last page button, but only if it's not in dynamicButtons */}
             {pages > 1 && !dynamicButtons.includes(pages - 1) && (
-                <button
+                <Button
                     key={pages - 1}
-                    onClick={handleClick}
-                    disabled={currentPage === pages - 1}
-                >
-                    {pages}
-                </button>
+                    handleClick={handleClick}
+                    isDisabled={currentPage === pages - 1}
+                    value={pages}
+                />
             )}
-
-            <button
-                onClick={handleNextPage}
-                disabled={currentPage + 1 === pages}
-            >
-                Next
-            </button>
-        </>
+            <Button
+                handleClick={handleNextPage}
+                isDisabled={currentPage + 1 === pages}
+                value={"Next"}
+            />
+        </div>
     );
 }
 

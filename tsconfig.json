@@ -10,15 +10,19 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "esModuleInterop": true,
-    /* Bundler mode */
-    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true, // Enable synthetic default imports for better compatibility
+    "moduleResolution": "node", // Change to 'node' for better handling of static imports
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "strict": true, // Enable strict mode to catch more issues
+    "noUnusedLocals": true, // Remove unused variables to keep code clean
+    "noUnusedParameters": true, // Ensure all function parameters are used
+    "noFallthroughCasesInSwitch": true, // Prevent fallthrough in switch statements
+    "noUncheckedSideEffectImports": true // Ensure side effects from imports are handled
   },
-  "files": [],
   "references": [
     {
       "path": "./tsconfig.app.json"

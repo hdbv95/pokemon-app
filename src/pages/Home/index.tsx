@@ -1,9 +1,11 @@
+// src/pages/Home.tsx
 import { useEffect, useState } from "react"
 import { getData, getPage, getSpecificPage } from "../../utils/api"
 import { ApiResponse } from "../../types/types"
 import Card from "../../components/Card"
 import SearchBox from "../../components/searchBox"
 import Pagination from "../../components/pagination"
+import "../../styles/index.css"
 
 const Home = () => {
     const defaultOffset = 20
@@ -13,7 +15,6 @@ const Home = () => {
     const [search, setSearch] = useState<string>("")
     const [pages, setPages] = useState<number>(0)
     const [currentPage, setCurrentPage] = useState<number>(0)
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -56,15 +57,39 @@ const Home = () => {
         setData(await getSpecificPage(params))
     }
 
-
     return (
-        <>
-            <SearchBox searchBoxData={{ search, handleChange, handleSubmit }} />
-            {searched
-                ? <Card pokemon={searched} />
-                : data ? data.results.map((pokemon, id) => <Card key={id} pokemon={pokemon} />) : <div>Loading...</div>}
-            <Pagination paginationData={{ currentPage, pages, handlePrevPage, handleNextPage, handleClick }} />
-        </>
+        <div className="container space-y-4 flex flex-col min-h-screen">
+            <SearchBox
+                search={search}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+            />
+            <div className="flex-grow">
+                {searched
+                    ? <Card
+                        pokemon={searched}
+                    />
+                    : data
+                        ? <div className="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-2">
+                            {data.results.map((pokemon, id) => (
+                                <Card
+                                    key={id}
+                                    pokemon={pokemon}
+                                />
+                            ))}
+                        </div>
+                        : <div>Loading...</div>}
+            </div>
+            <div className="flex justify-end">
+                <Pagination
+                    currentPage={currentPage}
+                    pages={pages}
+                    handlePrevPage={handlePrevPage}
+                    handleNextPage={handleNextPage}
+                    handleClick={handleClick}
+                />
+            </div>
+        </div>
     )
 }
 

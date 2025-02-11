@@ -6,8 +6,14 @@ import Card from "."
 
 jest.mock('../../utils/api')
 const mockedGetData = getData as jest.MockedFunction<typeof getData>
+const handleCardClickMock = jest.fn()
 
 describe("Card", () => {
+    afterEach(() => {
+        mockedGetData.mockClear()
+        handleCardClickMock.mockClear()
+    })
+
     test("renders pokemon data", async () => {
         const mockPokemonData = {
             sprites: {
@@ -15,7 +21,7 @@ describe("Card", () => {
             }
         }
         mockedGetData.mockResolvedValueOnce(mockPokemonData)
-        await act(async () => render(<Card pokemon={ pokemonResponse } />))
+        await act(async () => render(<Card pokemon={pokemonResponse} />))
 
         expect(screen.getByText(pokemonResponse.name)).toBeInTheDocument()
         expect(screen.getByAltText(pokemonResponse.name)).toHaveAttribute('src', 'mock-url')

@@ -1,18 +1,15 @@
 interface SearchBoxProps {
-    searchBoxData: {
-        search: string
-        handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-        handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-    }
+    search: string
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-const SearchBox: React.FC<SearchBoxProps> = (props) => {
-    const { search, handleChange, handleSubmit } = props.searchBoxData
+const SearchBox: React.FC<SearchBoxProps> = ({ search, handleChange, handleSubmit }) => {
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Search..." value={search} onChange={handleChange} />
-            <button type="submit" disabled={!search.trim()}>Search</button>
+        <form className="space-x-1 justify-items-center" onSubmit={handleSubmit}>
+            <input className="border-4 border-double" type="text" placeholder="Search..." value={search} onChange={handleChange} />
+            <button className="bg-sky-500 px-1 py-1 font-semibold text-white cursor-pointer" type="submit" disabled={!search.trim()}>Search</button>
         </form>
     )
 }
