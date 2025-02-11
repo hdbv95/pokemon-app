@@ -1,20 +1,24 @@
 // src/pages/Home.tsx
 import { useEffect, useState } from "react"
 import { getData, getPage, getSpecificPage } from "../../utils/api"
-import { ApiResponse } from "../../types/types"
+import { ApiResponse, BasePokemon, PokemonResponse } from "../../types"
 import Card from "../../components/Card"
 import SearchBox from "../../components/searchBox"
 import Pagination from "../../components/pagination"
 import "../../styles/index.css"
+import Modal from "../../components/modal"
 
 const Home = () => {
     const defaultOffset = 20
     const defaultLimit = 20
-    const [data, setData] = useState<ApiResponse>()
-    const [searched, setSearched] = useState<any>()
+    const [data, setData] = useState<ApiResponse | null>()
+    const [searched, setSearched] = useState<BasePokemon | undefined>(undefined)
     const [search, setSearch] = useState<string>("")
     const [pages, setPages] = useState<number>(0)
     const [currentPage, setCurrentPage] = useState<number>(0)
+    const [selectedPokemon, setSelectedPokemon] = useState<PokemonResponse | undefined>(undefined)
+
+    const [isOpen, setIsOpen] = useState<boolean>(false)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -51,10 +55,20 @@ const Home = () => {
 
     const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
         let clickedPage = 0
-        if (e.currentTarget.textContent) clickedPage = parseInt(e.currentTarget.textContent);
+        if (e.currentTarget.textContent) clickedPage = parseInt(e.currentTarget.textContent)
         const params = `?offset=${(clickedPage * defaultLimit) - defaultOffset}&limit=${defaultLimit}`
         setCurrentPage(clickedPage - 1)
         setData(await getSpecificPage(params))
+    }
+
+    const handleCardClick = async (e: React.MouseEvent<HTMLDivElement>) => {
+        setIsOpen(!isOpen)
+        if (e.currentTarget.textContent) setSelectedPokemon(await getData(e.currentTarget.textContent))
+    }
+
+    const handleModalClose = () => {
+        setIsOpen(!isOpen)
+        setSelectedPokemon(undefined)
     }
 
     return (
@@ -68,6 +82,7 @@ const Home = () => {
                 {searched
                     ? <Card
                         pokemon={searched}
+                        handleCardClick={handleCardClick}
                     />
                     : data
                         ? <div className="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-2">
@@ -75,6 +90,7 @@ const Home = () => {
                                 <Card
                                     key={id}
                                     pokemon={pokemon}
+                                    handleCardClick={handleCardClick}
                                 />
                             ))}
                         </div>
@@ -89,6 +105,12 @@ const Home = () => {
                     handleClick={handleClick}
                 />
             </div>
+            {selectedPokemon && <Modal
+                isOpen={isOpen}
+                handleClose={handleModalClose}
+                pokemon={selectedPokemon}
+            />
+            }
         </div>
     )
 }

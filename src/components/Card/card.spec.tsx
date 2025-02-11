@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { act, render, screen } from "@testing-library/react"
-import { pokemonResponse } from "../../utils/fixtures"
+import { basePokemonResponse } from "../../utils/fixtures"
 import { getData } from "../../utils/api"
 import Card from "."
 
@@ -21,9 +21,9 @@ describe("Card", () => {
             }
         }
         mockedGetData.mockResolvedValueOnce(mockPokemonData)
-        await act(async () => render(<Card pokemon={pokemonResponse} />))
+        await act(async () => render(<Card pokemon={basePokemonResponse} handleCardClick={handleCardClickMock} />))
 
-        expect(screen.getByText(pokemonResponse.name)).toBeInTheDocument()
-        expect(screen.getByAltText(pokemonResponse.name)).toHaveAttribute('src', 'mock-url')
+        expect(screen.getByText(basePokemonResponse.name)).toBeInTheDocument()
+        expect(screen.getByAltText(basePokemonResponse.name)).toHaveAttribute('src', 'mock-url')
     })
 })
