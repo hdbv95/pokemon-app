@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react'
+import { screen, render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import SearchBox from './index'
 
@@ -15,21 +15,21 @@ describe('SearchBox Component', () => {
     }
 
     test('renders input with placeholder', () => {
-        const { getByPlaceholderText } = render(<SearchBox {...props} />)
-        const inputElement = getByPlaceholderText('Search...')
+        render(<SearchBox {...props} />)
+        const inputElement = screen.getByPlaceholderText('Search...')
         expect(inputElement).toBeInTheDocument()
     })
 
     test('calls handleChange on input change', () => {
-        const { getByPlaceholderText } = render(<SearchBox {...props} />)
-        const inputElement = getByPlaceholderText('Search...')
+        render(<SearchBox {...props} />)
+        const inputElement = screen.getByPlaceholderText('Search...')
         fireEvent.change(inputElement, { target: { value: 'Pikachu' } })
         expect(mockHandleChange).toHaveBeenCalled()
     })
 
     test('calls handleSubmit on form submit', () => {
-        const { getByPlaceholderText } = render(<SearchBox {...props} />)
-        const inputElement = getByPlaceholderText('Search...')
+        render(<SearchBox {...props} />)
+        const inputElement = screen.getByPlaceholderText('Search...')
         fireEvent.change(inputElement, { target: { value: 'Pikachu' } })
         fireEvent.submit(inputElement.closest('form')!)
         expect(mockHandleSubmit).toHaveBeenCalled()

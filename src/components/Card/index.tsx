@@ -16,7 +16,7 @@ const Card: React.FC<CardProps> = (props) => {
             setPokemonData(await getData(pokemon.name))
         }
         fetchData()
-    }, [])
+    }, [pokemon])
 
     return (
         <div className="card">
