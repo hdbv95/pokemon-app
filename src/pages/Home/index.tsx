@@ -41,12 +41,12 @@ const Home = () => {
         if (search.trim()) {
             const filtered = data?.results.filter(pokemon =>
                 pokemon.name.toLowerCase().includes(search.toLowerCase())
-            );
-            setFilteredData(filtered || []);
+            )
+            setFilteredData(filtered || [])
         } else {
-            setFilteredData(data?.results || []);
+            setFilteredData(data?.results || [])
         }
-    }, [search, data]);
+    }, [search, data])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value)
@@ -123,14 +123,10 @@ const Home = () => {
     return (
         <div className="container space-y-4 flex flex-col min-h-screen">
             {error && <div className="text-red-500 text-center">{error}</div>}
-            <SearchBox
-                search={search}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-            />
-            <div className="m-5">
+            <SearchBox search={search} handleChange={handleChange} handleSubmit={handleSubmit} />
+            <div className="md:m-5">
                 {filteredData.length ? (
-                    <div className="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {
                             filteredData.map((pokemon, id) => (
                                 <Card key={id} pokemon={pokemon} handleCardClick={handleCardClick} />

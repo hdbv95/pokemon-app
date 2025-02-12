@@ -43,40 +43,42 @@ const Pagination: React.FC<PaginationProps> = ({ pages, currentPage, handlePrevP
                 isDisabled={currentPage === 0}
                 value={"Previous"}
             />
+            <div className="hidden md:flex items-center space-x-1">
+                {/* Render first page button, but only if it's not in dynamicButtons */}
+                {pages > 0 && !dynamicButtons.includes(0) && (
+                    <Button key={0}
+                        handleClick={handleClick}
+                        isDisabled={currentPage === 0}
+                        value={1}
+                    />
+                )}
 
-            {/* Render first page button, but only if it's not in dynamicButtons */}
-            {pages > 0 && !dynamicButtons.includes(0) && (
-                <Button key={0}
-                    handleClick={handleClick}
-                    isDisabled={currentPage === 0}
-                    value={1}
-                />
-            )}
+                {/* Render ellipsis if needed */}
+                {dynamicButtons[0] > 1 && pages > shownButtons && <span className="text-xs">...</span>}
 
-            {/* Render ellipsis if needed */}
-            {dynamicButtons[0] > 1 && pages > shownButtons && <span className="text-xs">...</span>}
+                {/* Render dynamic buttons */}
+                {dynamicButtons.map((elem) => (
+                    <Button key={elem}
+                        handleClick={handleClick}
+                        isDisabled={currentPage === elem}
+                        value={elem + 1}
+                    />
+                ))}
 
-            {/* Render dynamic buttons */}
-            {dynamicButtons.map((elem) => (
-                <Button key={elem}
-                    handleClick={handleClick}
-                    isDisabled={currentPage === elem}
-                    value={elem + 1}
-                />
-            ))}
+                {/* Render ellipsis if needed */}
+                {dynamicButtons.length > 0 && dynamicButtons[dynamicButtons.length - 1] < pages - 2 && pages > shownButtons && <span className="text-xs">...</span>}
 
-            {/* Render ellipsis if needed */}
-            {dynamicButtons.length > 0 && dynamicButtons[dynamicButtons.length - 1] < pages - 2 && pages > shownButtons && <span className="text-xs">...</span>}
+                {/* Render last page button, but only if it's not in dynamicButtons */}
+                {pages > 1 && !dynamicButtons.includes(pages - 1) && (
+                    <Button
+                        key={pages - 1}
+                        handleClick={handleClick}
+                        isDisabled={currentPage === pages - 1}
+                        value={pages}
+                    />
+                )}
+            </div>
 
-            {/* Render last page button, but only if it's not in dynamicButtons */}
-            {pages > 1 && !dynamicButtons.includes(pages - 1) && (
-                <Button
-                    key={pages - 1}
-                    handleClick={handleClick}
-                    isDisabled={currentPage === pages - 1}
-                    value={pages}
-                />
-            )}
             <Button
                 handleClick={handleNextPage}
                 isDisabled={currentPage + 1 === pages}
