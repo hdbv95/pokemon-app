@@ -18,7 +18,7 @@ const MovesList: React.FC<MovesListProps> = ({ moves }) => {
                 {moves.slice(0, 12).map((move, index) => (
                     <div
                         key={index}
-                        className="capitalize text-center py-1 px-3 text-sm rounded-full bg-blue-500 hover:bg-blue-400 text-white cursor-pointer transition-all duration-300 transform hover:scale-105 whitespace-normal"
+                        className="capitalize text-center py-1 px-3 text-sm rounded-full bg-blue-500 hover:bg-blue-400 text-white cursor-pointer transition-all duration-300 transform hover:scale-105 break-words"
                     >
                         {move.move.name}
                     </div>

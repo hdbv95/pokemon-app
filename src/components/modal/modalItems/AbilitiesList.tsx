@@ -12,18 +12,18 @@ interface AbilitiesListProps {
 
 const AbilitiesList: React.FC<AbilitiesListProps> = ({ abilities }) => {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col items-start flex-grow">
             <p className="text-lg font-semibold text-left mb-2">Abilities:</p>
-            <ul className="flex items-center justify-start space-x-2 py-1 px-2 overflow-x-auto">
+            <div className="grid grid-cols-3 gap-2 w-full">
                 {abilities.map((ability, index) => (
-                    <li
+                    <div
                         key={index}
-                        className="capitalize text-center py-1 px-4 text-sm rounded-full bg-blue-400 hover:bg-blue-300 text-white cursor-pointer transition-all duration-300 transform hover:scale-105 whitespace-normal"
+                        className="capitalize text-center py-1 px-4 text-sm rounded-full bg-blue-400 hover:bg-blue-300 text-white cursor-pointer transition-all duration-300 transform hover:scale-105 break-words"
                     >
                         {ability.ability.name}
-                    </li>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     )
 }

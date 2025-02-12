@@ -55,7 +55,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, handleClose, pokemon }) => {
             onClick={handleClose}
         >
             <div
-                className={`relative w-[600px] h-[550px] p-4 rounded-lg shadow-lg bg-white border-4 border-double ${isVisible ? 'transform translate-y-0' : 'transform translate-y-10'} transition-transform duration-300`}
+                className={`relative w-[100%] max-w-[500px] h-[100%] max-h-[500px] p-4 flex flex-col items-center md:max-h-none md:h-auto md:overflow-visible overflow-auto rounded-lg bg-white border-4 border-double ${isVisible ? 'transform translate-y-0' : 'transform translate-y-10'} transition-transform duration-300`}
                 onClick={handleModalClick}
             >
                 <button
@@ -65,23 +65,19 @@ const Modal: React.FC<ModalProps> = ({ isOpen, handleClose, pokemon }) => {
                     ×
                 </button>
 
-                <div className="flex flex-col space-y-3 h-full">
-                    {/* Pokemon Name and Image with Types pill next to it */}
-                    <div className="flex flex-col items-center space-y-1">
-                        <div className="flex items-center space-x-2">
-                            <h2 className="capitalize text-xl font-semibold">{pokemon.name}</h2>
-                            <TypesList types={pokemon.types} gradient={getGradient()} />
+                <div className="flex flex-col items-center space-y-3 w-full">
+                    <div className="flex flex-col items-center space-y-1 w-full">
+                        <div className="flex items-center space-x-2 w-full justify-center">
+                            <h2 className="capitalize text-xl font-semibold text-center">{pokemon.name}</h2>
                         </div>
+                        <TypesList types={pokemon.types} gradient={getGradient()} />
                         <PokemonImage name={pokemon.name} imageUrl={pokemon?.sprites.front_default} />
                     </div>
 
-                    {/* Pokemon ID, Height, and Weight */}
                     <PokemonInfo id={pokemon.id} height={pokemon.height} weight={pokemon.weight} />
 
-                    {/* Abilities Section */}
                     <AbilitiesList abilities={pokemon.abilities} />
 
-                    {/* Moves Section */}
                     <MovesList moves={pokemon.moves} />
                 </div>
             </div>
