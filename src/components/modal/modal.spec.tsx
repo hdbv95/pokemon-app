@@ -50,7 +50,7 @@ describe("Modal Component", () => {
 
     test("renders Pokémon types with dividers and correct spacing", () => {
         render(<Modal {...props} />)
-        const typeItems = screen.getAllByRole("listitem")
+        const typeItems = screen.getByTestId('types').childNodes
         expect(typeItems.length).toBe(2)
         const firstType = typeItems[0]
         expect(firstType).toHaveClass("border-r-2")
@@ -65,7 +65,7 @@ describe("Modal Component", () => {
     test("renders Pokémon ID, height, and weight correctly", () => {
         render(<Modal {...props} />)
         expect(screen.getByText(/ID:/i).textContent).toBe("ID: 1")
-        expect(screen.getByText(/Height:/i).textContent).toBe("Height: 7 decimetres")
-        expect(screen.getByText(/Weight:/i).textContent).toBe("Weight: 69 hectograms")
+        expect(screen.getByText(/Height:/i).textContent).toBe("Height: 7 dm")
+        expect(screen.getByText(/Weight:/i).textContent).toBe("Weight: 69 hg")
     })
 })

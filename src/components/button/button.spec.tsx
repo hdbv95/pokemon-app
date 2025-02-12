@@ -32,8 +32,8 @@ describe('Button ', () => {
         const button = screen.getByText('Click me') as HTMLButtonElement
         expect(button).toBeDisabled()
         fireEvent.click(button)
-        expect(mockClick).not.toHaveBeenCalled();
-    });
+        expect(mockClick).not.toHaveBeenCalled()
+    })
 
     test('button should not be disabled when isDisabled is false', () => {
         render(<Button {...props} />)

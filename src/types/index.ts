@@ -42,6 +42,12 @@ type Sprite = {
     back_default: string | null
     back_shiny: string | null
 }
+type move = {
+    move: {
+        name: string
+        url: string
+    }
+}
 
 export type PokemonResponse = {
     id: number
@@ -56,6 +62,7 @@ export type PokemonResponse = {
         name: string
         url: string
     }
+    moves: move[]
 }
 
 export const typeColors: Record<string, string[]> = {

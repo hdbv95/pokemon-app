@@ -14,27 +14,27 @@ const Pagination: React.FC<PaginationProps> = ({ pages, currentPage, handlePrevP
     const [dynamicButtons, setDynamicButtons] = useState<number[]>([])
 
     useEffect(() => {
-        let start = 0;
-        let end = pages;
+        let start = 0
+        let end = pages
 
         if (pages > shownButtons) {
-            const middle = Math.floor(shownButtons / 2);
+            const middle = Math.floor(shownButtons / 2)
             if (currentPage <= middle) {
                 // Near the beginning
-                start = 0;
-                end = shownButtons;
+                start = 0
+                end = shownButtons
             } else if (currentPage >= pages - middle - 1) {
                 // Near the end
-                start = pages - shownButtons;
-                end = pages;
+                start = pages - shownButtons
+                end = pages
             } else {
                 // In the middle
-                start = currentPage - middle;
-                end = currentPage + middle + (shownButtons % 2); // Adjust for even/odd shownButtons
+                start = currentPage - middle
+                end = currentPage + middle + (shownButtons % 2) // Adjust for even/odd shownButtons
             }
         }
-        setDynamicButtons(Array.from({ length: end - start }, (_, i) => start + i));
-    }, [currentPage, shownButtons, pages]);
+        setDynamicButtons(Array.from({ length: end - start }, (_, i) => start + i))
+    }, [currentPage, shownButtons, pages])
 
     return (
         <div className="space-x-1">
@@ -83,7 +83,7 @@ const Pagination: React.FC<PaginationProps> = ({ pages, currentPage, handlePrevP
                 value={"Next"}
             />
         </div>
-    );
+    )
 }
 
 export default Pagination

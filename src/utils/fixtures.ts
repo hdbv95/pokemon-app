@@ -53,7 +53,15 @@ export const pokemonResponse = {
     species: {
         name: 'bulbasaur',
         url: 'https://pokeapi.co/api/v2/pokemon-species/1/'
-    }
+    },
+    moves: [
+        {
+            "move": {
+                "name": "razor-wind",
+                "url": "https://pokeapi.co/api/v2/move/13/"
+            },
+        }
+    ]
 }
 
 export const pokemonWithoutSprite = {
@@ -64,11 +72,11 @@ export const pokemonWithoutSprite = {
         back_default: null,
         back_shiny: null
     },
-};
+}
 
 export const singleTypePokemon = {
     ...pokemonResponse,
     types: [
         { slot: 1, type: { name: 'fire', url: 'https://pokeapi.co/api/v2/type/10/' } }
     ]
-};
+}

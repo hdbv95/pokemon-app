@@ -16,6 +16,7 @@
     "axios": "^1.7.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-router": "^7.1.5",
     "tailwindcss": "^4.0.6"
   },
   "devDependencies": {
@@ -37,6 +38,7 @@
     "ts-node": "^10.9.2",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.22.0",
+    "util": "^0.12.5",
     "vite": "^6.1.0"
   }
 }
