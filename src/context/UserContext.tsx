@@ -7,11 +7,13 @@ interface User {
 interface UserContextType {
     user: User | null
     setUser: React.Dispatch<React.SetStateAction<User | null>>
+    logout: () => void
 }
 
 const defaultContextValue: UserContextType = {
     user: null,
     setUser: () => { },
+    logout: () => { }
 }
 
 const UserContext = createContext<UserContextType>(defaultContextValue)
@@ -28,14 +30,21 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             setUser(JSON.parse(storedUser))
         }
     }, [])
+
     useEffect(() => {
         if (user) {
             localStorage.setItem('user', JSON.stringify(user))
         }
     }, [user])
 
+    const logout = () => {
+        setUser(null)
+        localStorage.removeItem('user')
+    }
+
+
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, logout }}>
             {children}
         </UserContext.Provider>
     )

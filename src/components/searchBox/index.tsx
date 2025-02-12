@@ -1,9 +1,9 @@
 import searchIcon from "../../assets/searchIcon.svg"
 
 interface SearchBoxProps {
-    search: string;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    search: string
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 const SearchBox: React.FC<SearchBoxProps> = ({ search, handleChange, handleSubmit }) => {
@@ -24,7 +24,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ search, handleChange, handleSubmi
                 <img src={searchIcon} alt="Search" className="w-5 h-5" />
             </button>
         </form>
-    );
-};
+    )
+}
 
-export default SearchBox;
+export default SearchBox

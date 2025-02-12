@@ -8,6 +8,7 @@ import "../../styles/index.css"
 import Modal from "../../components/modal"
 import { useUser } from "../../context/UserContext"
 import { Navigate } from "react-router"
+import Logout from "../../components/button/logout"
 
 const Home = () => {
     const { user } = useUser()
@@ -123,7 +124,10 @@ const Home = () => {
     return (
         <div className="container space-y-4 flex flex-col min-h-screen">
             {error && <div className="text-red-500 text-center">{error}</div>}
-            <SearchBox search={search} handleChange={handleChange} handleSubmit={handleSubmit} />
+            <div className="flex sm:flex-row flex-col-reverse">
+                <SearchBox search={search} handleChange={handleChange} handleSubmit={handleSubmit} />
+                <Logout />
+            </div>
             <div className="md:m-5">
                 {filteredData.length ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
