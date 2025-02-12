@@ -24,7 +24,7 @@ describe("Home", () => {
                 <Home />
             </MemoryRouter>
         )
-        expect(screen.getByText("Loading...")).toBeInTheDocument()
+        expect(screen.getByText("No Pokémon found")).toBeInTheDocument()
     })
 
     test("renders list of pokemons", async () => {

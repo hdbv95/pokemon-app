@@ -71,7 +71,7 @@ const Login = () => {
                     Login
                 </button>
             </form>
-            {badCreds && <div>Invalid user or password</div>}
+            {badCreds && <div className="text-red-500 text-center">Invalid user or password</div>}
         </div>
     )
 }

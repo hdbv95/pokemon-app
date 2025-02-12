@@ -8,7 +8,7 @@ const Button: React.FC<ButtonProps> = ({ handleClick, value, isDisabled }) => {
 
     return (
         <button
-            className="bg-sky-500 px-1 py-1 text-white disabled:bg-gray-800/30 text-sm cursor-pointer"
+            className="bg-sky-500 px-3 py-1 text-white disabled:bg-gray-800/30 text-xs enabled:cursor-pointer"
             onClick={handleClick}
             disabled={isDisabled}
         >

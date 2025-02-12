@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { getData, getPage, getSpecificPage } from "../../utils/api"
 import { ApiResponse, BasePokemon, PokemonResponse } from "../../types"
 import Card from "../../components/Card"
@@ -14,45 +14,83 @@ const Home = () => {
     const defaultOffset = 20
     const defaultLimit = 20
     const [data, setData] = useState<ApiResponse | null>()
-    const [searched, setSearched] = useState<BasePokemon | undefined>(undefined)
     const [search, setSearch] = useState<string>("")
-    const [pages, setPages] = useState<number>(0)
+    const [filteredData, setFilteredData] = useState<BasePokemon[]>([])
     const [currentPage, setCurrentPage] = useState<number>(0)
     const [selectedPokemon, setSelectedPokemon] = useState<PokemonResponse | undefined>(undefined)
+    const [error, setError] = useState<string>("")
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     useEffect(() => {
         const fetchData = async () => {
-            setData(await getData())
+            try {
+                const response = await getData()
+                setData(response)
+                setFilteredData(response?.results || [])
+            } catch (err) {
+                setError("Failed to fetch Pokémon data. Please try again later.")
+            }
         }
         fetchData()
     }, [])
 
+    const pages = useMemo(() => (data ? Math.ceil(data.count / defaultOffset) : 0), [data])
+
     useEffect(() => {
-        setPages(data ? Math.ceil(data.count / defaultOffset) : 0)
-    }, [data])
+        if (search.trim()) {
+            const filtered = data?.results.filter(pokemon =>
+                pokemon.name.toLowerCase().includes(search.toLowerCase())
+            );
+            setFilteredData(filtered || []);
+        } else {
+            setFilteredData(data?.results || []);
+        }
+    }, [search, data]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearched(undefined)
         setSearch(e.target.value)
+        setError("")
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setSearched(await getData(search))
+        if (search.trim()) {
+            try {
+                setError("")
+                const response = await getData(search)
+                setFilteredData([{ ...response }])
+            } catch (error) {
+                setError("No results found. Please try a different search.")
+            }
+        }
     }
+
 
     const handleNextPage = async () => {
         const nextpage = data?.next
-        setCurrentPage(currentPage + 1)
-        setData(await getPage(nextpage ?? ""))
+        if (nextpage) {
+            try {
+                setCurrentPage(currentPage + 1)
+                setData(await getPage(nextpage ?? ""))
+                setError("")
+            } catch (error) {
+                setError("Failed to load next page. Please try again.")
+            }
+        }
     }
 
     const handlePrevPage = async () => {
         const prevPage = data?.previous
-        setCurrentPage(currentPage - 1)
-        setData(await getPage(prevPage ?? ""))
+        if (prevPage) {
+            try {
+                setCurrentPage(currentPage - 1)
+                setData(await getPage(prevPage ?? ""))
+                setError("")
+            } catch (error) {
+                setError("Failed to load next page. Please try again.")
+            }
+        }
     }
 
     const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -64,8 +102,13 @@ const Home = () => {
     }
 
     const handleCardClick = async (e: React.MouseEvent<HTMLDivElement>) => {
-        setIsOpen(true)
-        if (e.currentTarget.textContent) setSelectedPokemon(await getData(e.currentTarget.textContent))
+        try {
+            setIsOpen(true)
+            if (e.currentTarget.textContent) setSelectedPokemon(await getData(e.currentTarget.textContent))
+            setError("")
+        } catch (err) {
+            setError("Failed to load Pokémon details. Please try again.")
+        }
     }
 
     const handleModalClose = () => {
@@ -79,30 +122,28 @@ const Home = () => {
 
     return (
         <div className="container space-y-4 flex flex-col min-h-screen">
+            {error && <div className="text-red-500 text-center">{error}</div>}
             <SearchBox
                 search={search}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
             />
-            <div className="flex-grow">
-                {searched
-                    ? <Card
-                        pokemon={searched}
-                        handleCardClick={handleCardClick}
-                    />
-                    : data
-                        ? <div className="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-2">
-                            {data.results.map((pokemon, id) => (
-                                <Card
-                                    key={id}
-                                    pokemon={pokemon}
-                                    handleCardClick={handleCardClick}
-                                />
-                            ))}
-                        </div>
-                        : <div>Loading...</div>}
+            <div className="m-5">
+                {filteredData.length ? (
+                    <div className="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-2">
+                        {
+                            filteredData.map((pokemon, id) => (
+                                <Card key={id} pokemon={pokemon} handleCardClick={handleCardClick} />
+                            ))
+
+                        }
+
+                    </div>
+                ) : (
+                    <div className="text-center">No Pokémon found</div>
+                )}
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-center w-full">
                 <Pagination
                     currentPage={currentPage}
                     pages={pages}

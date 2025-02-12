@@ -1,4 +1,3 @@
-// src/components/Card/index.tsx
 import { useEffect, useState } from "react"
 import { BasePokemon } from "../../types"
 import { getData } from "../../utils/api"
@@ -22,14 +21,14 @@ const Card: React.FC<CardProps> = ({ pokemon, handleCardClick }) => {
 
     return (
         <div
-            className="border-4 border-double shadow-md rounded-tl-lg rounded-br-lg md:w-40 transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg cursor-pointer"
+            className="space-y-4 border-4 py-4 border-double shadow-md rounded-tl-lg rounded-br-lg w-40 h-50 transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg cursor-pointer"
             onClick={handleCardClick}
         >
             <div className="flex justify-center">
                 {pokemonData?.sprites.front_default ? (
                     <img className="w-20 h-20" src={pokemonData.sprites.front_default} alt={pokemon.name} />
                 ) : (
-                    <img className="w-10 h-10" src={pokeBall} alt={pokemon.name} />
+                    <img className="w-20 h-20" src={pokeBall} alt={pokemon.name} />
                 )}
             </div>
             <h2 className="capitalize text-center text-sm break-words">{pokemon.name}</h2>

@@ -37,7 +37,7 @@ const Pagination: React.FC<PaginationProps> = ({ pages, currentPage, handlePrevP
     }, [currentPage, shownButtons, pages])
 
     return (
-        <div className="space-x-1">
+        <div className="flex items-center space-x-1 min-w-[240px] justify-center">
             <Button
                 handleClick={handlePrevPage}
                 isDisabled={currentPage === 0}
@@ -54,7 +54,7 @@ const Pagination: React.FC<PaginationProps> = ({ pages, currentPage, handlePrevP
             )}
 
             {/* Render ellipsis if needed */}
-            {dynamicButtons[0] > 1 && pages > shownButtons && <span>...</span>}
+            {dynamicButtons[0] > 1 && pages > shownButtons && <span className="text-xs">...</span>}
 
             {/* Render dynamic buttons */}
             {dynamicButtons.map((elem) => (
@@ -66,7 +66,7 @@ const Pagination: React.FC<PaginationProps> = ({ pages, currentPage, handlePrevP
             ))}
 
             {/* Render ellipsis if needed */}
-            {dynamicButtons.length > 0 && dynamicButtons[dynamicButtons.length - 1] < pages - 2 && pages > shownButtons && <span>...</span>}
+            {dynamicButtons.length > 0 && dynamicButtons[dynamicButtons.length - 1] < pages - 2 && pages > shownButtons && <span className="text-xs">...</span>}
 
             {/* Render last page button, but only if it's not in dynamicButtons */}
             {pages > 1 && !dynamicButtons.includes(pages - 1) && (
